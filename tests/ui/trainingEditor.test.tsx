@@ -6,7 +6,12 @@ import { describe, expect, it } from "vitest";
 import TranslationTrainingPage from "../../src/app/train/translation/page";
 import WritingTrainingPage from "../../src/app/train/writing/page";
 import TrainingEditor from "../../src/components/TrainingEditor";
-import { seedTasks } from "../../src/domain/tasks";
+import { getDailyPracticeSet } from "../../src/domain/tasks";
+import { afterEach, vi } from "vitest";
+
+afterEach(() => {
+  vi.useRealTimers();
+});
 
 describe("TrainingEditor", () => {
   it("counts English words and enables submit after text input", async () => {
@@ -37,8 +42,11 @@ describe("TrainingEditor", () => {
   });
 
   it("renders the writing training page with the seeded writing prompt", () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-08-25T08:00:00Z"));
+
     const html = renderToStaticMarkup(<WritingTrainingPage />);
-    const writingPrompt = seedTasks.find((task) => task.type === "writing")?.prompt ?? "";
+    const writingPrompt = getDailyPracticeSet(new Date("2026-08-25T08:00:00Z")).writingTask.prompt;
 
     expect(html).toContain("写作训练");
     expect(html).toContain(writingPrompt);
@@ -47,9 +55,12 @@ describe("TrainingEditor", () => {
   });
 
   it("renders the translation training page with the seeded translation prompt", () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-08-25T08:00:00Z"));
+
     const html = renderToStaticMarkup(<TranslationTrainingPage />);
     const translationPrompt =
-      seedTasks.find((task) => task.type === "translation")?.prompt ?? "";
+      getDailyPracticeSet(new Date("2026-08-25T08:00:00Z")).translationTask.prompt;
 
     expect(html).toContain("翻译训练");
     expect(html).toContain(translationPrompt);

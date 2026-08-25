@@ -13,6 +13,13 @@ export type TrainingTask = {
   theme: string;
 };
 
+export type DailyPracticeSet = {
+  dayNumber: number;
+  cycleLength: number;
+  writingTask: TrainingTask;
+  translationTask: TrainingTask;
+};
+
 export const seedTasks: TrainingTask[] = [
   {
     id: "cet4-writing-ai-tools",
@@ -138,4 +145,31 @@ export const seedTasks: TrainingTask[] = [
 
 export function getTasksByType(type: TrainingType) {
   return seedTasks.filter((task) => task.type === type);
+}
+
+const DAILY_CYCLE_LENGTH = 30;
+const DAILY_ANCHOR_UTC = Date.UTC(2026, 7, 25);
+
+function positiveMod(value: number, divisor: number) {
+  return ((value % divisor) + divisor) % divisor;
+}
+
+export function getDailyPracticeSet(referenceDate = new Date()): DailyPracticeSet {
+  const writingTasks = getTasksByType("writing");
+  const translationTasks = getTasksByType("translation");
+  const dayDiff = Math.floor((Date.UTC(
+    referenceDate.getUTCFullYear(),
+    referenceDate.getUTCMonth(),
+    referenceDate.getUTCDate(),
+  ) - DAILY_ANCHOR_UTC) / 86400000);
+  const cycleIndex = positiveMod(dayDiff, DAILY_CYCLE_LENGTH);
+  const group = Math.floor(cycleIndex / writingTasks.length);
+  const slot = cycleIndex % writingTasks.length;
+
+  return {
+    dayNumber: cycleIndex + 1,
+    cycleLength: DAILY_CYCLE_LENGTH,
+    writingTask: writingTasks[(slot + group) % writingTasks.length],
+    translationTask: translationTasks[(slot + group * 2) % translationTasks.length],
+  };
 }
