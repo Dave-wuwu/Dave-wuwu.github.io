@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 
 type TrainingEditorProps = {
@@ -7,6 +8,7 @@ type TrainingEditorProps = {
   prompt: string;
   placeholder: string;
   submitLabel: string;
+  children?: ReactNode;
 };
 
 function countEnglishWords(text: string) {
@@ -24,6 +26,7 @@ export default function TrainingEditor({
   prompt,
   placeholder,
   submitLabel,
+  children,
 }: TrainingEditorProps) {
   const [answer, setAnswer] = useState("");
   const wordCount = useMemo(() => countEnglishWords(answer), [answer]);
@@ -61,6 +64,7 @@ export default function TrainingEditor({
           </button>
         </div>
       </section>
+      {children}
     </main>
   );
 }

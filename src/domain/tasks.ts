@@ -135,3 +135,7 @@ export const seedTasks: TrainingTask[] = [
     theme: "smart cities",
   },
 ];
+
+export function getTasksByType(type: TrainingType) {
+  return seedTasks.filter((task) => task.type === type);
+}
