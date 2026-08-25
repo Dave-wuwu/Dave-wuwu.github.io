@@ -6,7 +6,7 @@ const translationTasks = getTasksByType("translation");
 
 export default function TranslationTrainingPage() {
   return (
-    <AppShell>
+    <AppShell activePath="/train/translation/">
       <TrainingEditor
         title="翻译训练"
         placeholder="输入你的英文翻译..."

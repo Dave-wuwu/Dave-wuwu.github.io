@@ -656,7 +656,7 @@ p {
   justify-content: center;
 }
 
-.bottom-nav-link:first-child {
+.bottom-nav-link.is-active {
   background: var(--surface-soft);
   color: var(--green-dark);
 }

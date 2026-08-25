@@ -10,7 +10,7 @@ import { summarizeWeaknesses } from "../../src/domain/weakness";
 describe("dashboard UI", () => {
   it("renders the app shell title, target, and navigation links", () => {
     const html = renderToStaticMarkup(
-      <AppShell>
+      <AppShell activePath="/train/writing/">
         <main>内容</main>
       </AppShell>,
     );
@@ -22,6 +22,8 @@ describe("dashboard UI", () => {
     expect(html).toContain("训练");
     expect(html).toContain("手写");
     expect(html).toContain("弱点");
+    expect(html).toContain("bottom-nav-link is-active");
+    expect(html).toContain('aria-current="page"');
   });
 
   it("renders score and weakness summaries from domain data", () => {

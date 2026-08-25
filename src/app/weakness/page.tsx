@@ -10,7 +10,7 @@ const weaknessSummary = summarizeWeaknesses([
 
 export default function WeaknessPage() {
   return (
-    <AppShell>
+    <AppShell activePath="/weakness/">
       <main className="weakness-page">
         <section className="weakness-hero" aria-labelledby="weakness-title">
           <div>

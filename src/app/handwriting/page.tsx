@@ -11,7 +11,7 @@ export default function HandwritingPage() {
   const isSubmitDisabled = reviewText.trim().length === 0;
 
   return (
-    <AppShell>
+    <AppShell activePath="/handwriting/">
       <main className="handwriting-page" aria-labelledby="handwriting-title">
         <section className="handwriting-panel">
           <div className="handwriting-header">

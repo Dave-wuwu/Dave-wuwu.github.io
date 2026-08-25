@@ -6,7 +6,7 @@ const writingTasks = getTasksByType("writing");
 
 export default function WritingTrainingPage() {
   return (
-    <AppShell>
+    <AppShell activePath="/train/writing/">
       <TrainingEditor
         title="写作训练"
         placeholder="输入你的作文..."

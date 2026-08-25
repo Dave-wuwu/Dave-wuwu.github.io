@@ -14,7 +14,7 @@ const weaknessSummary = summarizeWeaknesses([
 
 export default function HomePage() {
   return (
-    <AppShell>
+    <AppShell activePath="/">
       <main className="dashboard">
         <section className="dashboard-hero" aria-labelledby="dashboard-title">
           <div>
