@@ -1,14 +1,20 @@
 "use client";
 
-import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
+
+type LibraryPreviewItem = {
+  title: string;
+  meta: string;
+  badge: string;
+};
 
 type TrainingEditorProps = {
   title: string;
   prompt: string;
   placeholder: string;
   submitLabel: string;
-  children?: ReactNode;
+  libraryTitle?: string;
+  libraryItems?: LibraryPreviewItem[];
 };
 
 function countEnglishWords(text: string) {
@@ -26,7 +32,8 @@ export default function TrainingEditor({
   prompt,
   placeholder,
   submitLabel,
-  children,
+  libraryTitle,
+  libraryItems,
 }: TrainingEditorProps) {
   const [answer, setAnswer] = useState("");
   const wordCount = useMemo(() => countEnglishWords(answer), [answer]);
@@ -64,7 +71,29 @@ export default function TrainingEditor({
           </button>
         </div>
       </section>
-      {children}
+
+      {libraryItems && libraryItems.length > 0 ? (
+        <section className="task-card" aria-labelledby="task-library-title">
+          <div className="section-heading-row">
+            <div>
+              <p className="section-kicker">题库预览</p>
+              <h2 id="task-library-title">{libraryTitle ?? "题库预览"}</h2>
+            </div>
+          </div>
+
+          <div className="task-list">
+            {libraryItems.map((item) => (
+              <div className="task-link" key={`${item.title}-${item.badge}`}>
+                <div>
+                  <strong>{item.title}</strong>
+                  <span>{item.meta}</span>
+                </div>
+                <span>{item.badge}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
     </main>
   );
 }
